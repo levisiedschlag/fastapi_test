@@ -1,5 +1,4 @@
 from typing import List
-from unittest import result
 from fastapi import APIRouter, status, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
