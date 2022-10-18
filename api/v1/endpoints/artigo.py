@@ -52,13 +52,13 @@ async def put_artigo(artigo_id:int, artigo:ArtigoSchema, db:AsyncSession=Depends
         result=await session.execute(query)
         artigo_up:ArtigoModel=result.scalars().unique().one_or_none()
         if artigo_up:
-            if artigo_up.titulo:
+            if artigo.titulo:
                 artigo_up.titulo=artigo.titulo
-            if artigo_up.descricao:
+            if artigo.descricao:
                 artigo_up.descricao=artigo.descricao
-            if artigo_up.criador:
+            if artigo.criador:
                 artigo_up.criador=usuario_logado.id
-            if artigo_up.url_fonte:
+            if artigo.url_fonte:
                 artigo_up.url_fonte=artigo.url_fonte
 
             await session.commit()

@@ -8,6 +8,7 @@ class UsuarioSchemaBase(BaseModel):
     nome:str
     sobrenome:str
     email:EmailStr
+    senha:str
     eh_admin:bool=False
 
     class Config:
