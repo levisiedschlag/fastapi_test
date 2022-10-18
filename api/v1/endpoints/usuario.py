@@ -62,7 +62,7 @@ async def get_usuario(usuario_id:int, db:AsyncSession=Depends(get_session)):
 
 # EDITAR USUARIO
 @router.put('/{usuario_id}', status_code=status.HTTP_202_ACCEPTED, response_model=UsuarioSchemaBase)
-async def put_usuario(usuario_id:int,usuario:UsuarioSchemaUp , db:AsyncSession=Depends(get_session), usuario_logado:UsuarioModel=Depends(get_current_user)):
+async def put_usuario(usuario_id:int,usuario:UsuarioSchemaUp , db:AsyncSession=Depends(get_session)):
     async with db as session:
         query=select(UsuarioModel).filter(UsuarioModel.id==usuario_id)
         result=await session.execute(query)

@@ -16,7 +16,7 @@ async def post_artigo(artigo:ArtigoSchema, usuario_logado:UsuarioModel=Depends(g
     novo_artigo:ArtigoModel = ArtigoModel(
         titulo=artigo.titulo,
         descricao=artigo.descricao,
-        url_fonte=artigo.url_font,
+        url_fonte=artigo.url_fonte,
         usuario_id=usuario_logado.id
         )
     db.add(novo_artigo)
