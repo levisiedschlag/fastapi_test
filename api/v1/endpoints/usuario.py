@@ -22,17 +22,22 @@ def get_logado(usuario_logado:UsuarioModel=Depends(get_current_user)):
 
 # POST / SIGN-UP / CRIAR
 @router.post('/signup', status_code=status.HTTP_201_CREATED, response_model=UsuarioSchemaBase)
-async def post_usuario(usuario:UsuarioSchemaCreate, db:AsyncSession=Depends(get_session)):
-    novo_usuario:UsuarioModel=UsuarioModel(
+async def post_usuario(usuario: UsuarioSchemaCreate, db: AsyncSession = Depends(get_session)):
+    novo_usuario: UsuarioModel = UsuarioModel(
         nome=usuario.nome, 
         sobrenome=usuario.sobrenome,
-        email=usuario.email,
-        senha=gerar_hash_senha(usuario.senha),
+        email=usuario.email, 
+        senha=gerar_hash_senha(usuario.senha), 
         eh_admin=usuario.eh_admin
         )
     async with db as session:
-        session.add(novo_usuario)
-        return novo_usuario
+        try:
+            session.add(novo_usuario)
+            await session.commit()
+            return novo_usuario
+        except:
+            raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE,
+                                detail='Já existe um usuário com este email cadastrado.')
 
 # BUSCAR USUARIOS
 @router.get('/', status_code=status.HTTP_200_OK, response_model=List[UsuarioSchemaBase])
@@ -59,7 +64,7 @@ async def get_usuario(usuario_id:int, db:AsyncSession=Depends(get_session)):
 @router.put('/{usuario_id}', status_code=status.HTTP_202_ACCEPTED, response_model=UsuarioSchemaBase)
 async def put_usuario(usuario_id:int,usuario:UsuarioSchemaUp , db:AsyncSession=Depends(get_session), usuario_logado:UsuarioModel=Depends(get_current_user)):
     async with db as session:
-        query=select(UsuarioModel).filter(UsuarioModel.id==usuario_id).filter(UsuarioModel.id==usuario_logado.id)
+        query=select(UsuarioModel).filter(UsuarioModel.id==usuario_id)
         result=await session.execute(query)
         usuario_up:UsuarioSchemaBase=result.scalars().unique().one_or_none()
         if usuario_up:
