@@ -9,3 +9,9 @@ class ArtigoSchema(BaseModel):
     usuario_id:Optional[int]
     class Config:
         orm_mode=True
+
+# class ArtigoSchemaUp(ArtigoSchema):
+#     titulo:Optional[str]
+#     descricao:Optional[str]
+#     url_fonte:Optional[HttpUrl]
+#     usuario_id:Optional[int]
