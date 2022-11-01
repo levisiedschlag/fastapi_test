@@ -1,12 +1,6 @@
-from email.policy import default
-from enum import unique
-from operator import index
-import string
-from pydantic import BoolError
 from sqlalchemy import Integer, String, Column, Boolean
 from sqlalchemy.orm import relationship
 from core.configs import settings
-
 
 class UsuarioModel(settings.DBBaseModel):
     __tablename__='usuarios'
