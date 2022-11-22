@@ -1,7 +1,5 @@
-from typing import List, Optional, Any
-from unittest import result
-from urllib.error import ContentTooShortError
-from fastapi import APIRouter, Query, status, Depends, HTTPException, Response
+from typing import List
+from fastapi import APIRouter, status, Depends, HTTPException, Response
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
